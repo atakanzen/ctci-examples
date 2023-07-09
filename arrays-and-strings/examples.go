@@ -105,3 +105,40 @@ func CheckIfPermutationWithRunes(stringOne, stringTwo string) bool {
 }
 
 // --------------------------------------------------------------------------------------------------------------
+
+// 1.3 URLify: Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end to hold the additional characters, and that you are give the true length of the string. Perform operation in place if possible
+
+// Input: "My John Smith    ", 13
+// Output: "Mr%20John%20Smith"
+
+// Seeing this example, I would ask if it's possible to trim the excessive empty spaces around the input
+// We can then just loop in the string, check if it's white space, then replace it with %20
+
+// Hint One: Easiest to modify strings if going from end to start
+
+func URLify(input string, length int) string {
+	space := 0
+	r := []rune{}
+	for i := 0; i < length; i++ {
+		if string(input[i]) == " " {
+			space++
+		}
+	}
+	for _, v := range input {
+		r = append(r, v)
+	}
+	index := space*2 + length
+	for i := length - 1; i >= 0; i-- {
+		if r[i] == ' ' {
+			r[index-1] = '0'
+			r[index-2] = '2'
+			r[index-3] = '%'
+			index = index - 3
+		} else {
+			r[index-1] = r[i]
+			index--
+		}
+	}
+
+	return string(r)
+}

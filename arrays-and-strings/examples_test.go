@@ -8,6 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// 1.1 --------------------------------------------------------------------------------------------------------
+
 func TestExampleOnePointOne(t *testing.T) {
 	tests := []struct {
 		input string
@@ -49,6 +51,8 @@ func BenchmarkOnePointOne(b *testing.B) {
 		})
 	}
 }
+
+// 1.2 --------------------------------------------------------------------------------------------------------
 
 func TestExampleOnePointTwoWithHashmap(t *testing.T) {
 	tests := []struct {
@@ -142,6 +146,30 @@ func BenchmarkOnePointTwoWithRunes(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				arraysandstrings.CheckIfPermutationWithRunes(tt.inputOne, tt.inputTwo)
 			}
+		})
+	}
+}
+
+// 1.3 --------------------------------------------------------------------------------------------------------
+
+func TestURLify(t *testing.T) {
+	tests := []struct {
+		input  string
+		length int
+		want   string
+	}{
+		{
+			"Mr John Smith      ",
+			13,
+			"Mr%20John%20Smith  ",
+		},
+	}
+
+	for _, tt := range tests {
+		testName := fmt.Sprintf("%s", tt.input)
+		t.Run(testName, func(t *testing.T) {
+			actual := arraysandstrings.URLify(tt.input, tt.length)
+			assert.Equal(t, tt.want, actual)
 		})
 	}
 }
