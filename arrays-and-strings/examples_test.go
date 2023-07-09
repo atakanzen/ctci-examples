@@ -50,7 +50,7 @@ func BenchmarkOnePointOne(b *testing.B) {
 	}
 }
 
-func TestExampleOnePointTwo(t *testing.T) {
+func TestExampleOnePointTwoWithHashmap(t *testing.T) {
 	tests := []struct {
 		inputOne, inputTwo string
 		want               bool
@@ -72,13 +72,35 @@ func TestExampleOnePointTwo(t *testing.T) {
 	}
 }
 
+func TestExampleOnePointTwoWithRunes(t *testing.T) {
+	tests := []struct {
+		inputOne, inputTwo string
+		want               bool
+	}{
+		{"qwert", "trewq", true},
+		{"abba", "baba", true},
+		{"dafgq", "fqgad", true},
+		{"dog", "god    ", false},
+		{"a", "ba", false},
+		{"abc", "abb", false},
+	}
+
+	for _, tt := range tests {
+		testName := fmt.Sprintf("%s and %s", tt.inputOne, tt.inputTwo)
+		t.Run(testName, func(t *testing.T) {
+			actual := arraysandstrings.CheckIfPermutationWithRunes(tt.inputOne, tt.inputTwo)
+			assert.Equal(t, tt.want, actual)
+		})
+	}
+}
+
 func FuzzOnePointTwo(f *testing.F) {
 	f.Fuzz(func(t *testing.T, inputOne, inputTwo string) {
 		arraysandstrings.CheckIfPermutation(inputOne, inputTwo)
 	})
 }
 
-func BenchmarkOnePointTwo(b *testing.B) {
+func BenchmarkOnePointTwoWithHashmap(b *testing.B) {
 
 	tests := []struct {
 		inputOne, inputTwo string
@@ -96,6 +118,29 @@ func BenchmarkOnePointTwo(b *testing.B) {
 		b.Run(testName, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				arraysandstrings.CheckIfPermutation(tt.inputOne, tt.inputTwo)
+			}
+		})
+	}
+}
+
+func BenchmarkOnePointTwoWithRunes(b *testing.B) {
+
+	tests := []struct {
+		inputOne, inputTwo string
+		want               bool
+	}{
+		{"qwert", "trewq", true},
+		{"abba", "baba", true},
+		{"dafgq", "fqgad", true},
+		{"a", "ba", false},
+		{"abc", "abb", false},
+	}
+
+	for _, tt := range tests {
+		testName := fmt.Sprintf("%s and %s", tt.inputOne, tt.inputTwo)
+		b.Run(testName, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				arraysandstrings.CheckIfPermutationWithRunes(tt.inputOne, tt.inputTwo)
 			}
 		})
 	}

@@ -76,4 +76,32 @@ func getFrequencyMap(input string) map[rune]int {
 	return frequencyMap
 }
 
+// What I missed from the book?
+
+/*
+	- Not necessarily about the book, but I could have used an integer array to map each rune within a predefined integer list, i.e. alphabet. See code below
+*/
+
+// Improvement
+
+func CheckIfPermutationWithRunes(stringOne, stringTwo string) bool {
+	// Here making ASCII array, depends on the incoming string so derive from interviewer
+	letters := make([]int, 128)
+	for _, ru := range stringOne {
+		// We count each rune occurence in stringOne
+		// Runes are integers, and can be used as indices
+		letters[ru]++
+	}
+
+	for _, ru := range stringTwo {
+		// We then decrease each rune occurrence by one, if it reaches -1 that means the amount of characters are not equal between two string, meaning they are not permutations
+		letters[ru]--
+		if letters[ru] < 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
 // --------------------------------------------------------------------------------------------------------------
