@@ -31,3 +31,49 @@ func HasAllUniqueChars(input string) bool {
 */
 
 // --------------------------------------------------------------------------------------------------------------
+
+// 1.2 Check Permutation: Given two strings, write a method to decide if one is a permutation of the other
+
+// abac , baac , caab
+// In this case permutations are same length, so we can immediately return false if lengths are not equal
+// We can make use of a hashmap to count the occurrences and then see if they match in terms of number of occurrences and the characters
+
+// Time complexity is O(A + B * N), dropping the constants yields O(N)
+
+func CheckIfPermutation(stringOne, stringTwo string) bool {
+	if len(stringOne) != len(stringTwo) {
+		return false
+	}
+
+	// O(A + B) where A is stringOne's length and B is stringTwo's length
+	frequencyMapForOne := getFrequencyMap(stringOne)
+	frequencyMapForTwo := getFrequencyMap(stringTwo)
+
+	// O(N)
+	for keyOne, valOne := range frequencyMapForOne {
+		if valTwo, ok := frequencyMapForTwo[keyOne]; ok {
+			if valOne != valTwo {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
+func getFrequencyMap(input string) map[rune]int {
+	frequencyMap := make(map[rune]int, 0)
+
+	for _, ch := range input {
+		if val, ok := frequencyMap[ch]; ok {
+			frequencyMap[ch] = val + 1
+			continue
+		}
+
+		frequencyMap[ch] = 1
+	}
+
+	return frequencyMap
+}
+
+// --------------------------------------------------------------------------------------------------------------
