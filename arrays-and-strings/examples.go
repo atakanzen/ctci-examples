@@ -142,3 +142,31 @@ func URLify(input string, length int) string {
 
 	return string(r)
 }
+
+// --------------------------------------------------------------------------------------------------------------
+
+// 1.4 Palindrome Permutation: Given a string, write a function to check if it is a permutation of a palindrome. Palindrome doesn't need to be just limited to dictionary words.
+
+// To be a permutation of a palindrome a string can have no more than one character that is odd!
+
+func CheckIfPalindromePermutation(input string) bool {
+	letters := make([]int, 128)
+	for _, ru := range input {
+		if string(ru) != " " {
+			letters[ru]++
+		}
+	}
+
+	oddCounter := 0
+
+	for _, letterCount := range letters {
+		if letterCount%2 != 0 {
+			oddCounter++
+			if oddCounter > 1 {
+				return false
+			}
+		}
+	}
+
+	return true
+}

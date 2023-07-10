@@ -173,3 +173,25 @@ func TestURLify(t *testing.T) {
 		})
 	}
 }
+
+// 1.4 --------------------------------------------------------------------------------------------------------
+
+func TestCheckIfPermutationPalindrome(t *testing.T) {
+	testCases := []struct {
+		desc  string
+		input string
+		want  bool
+	}{
+		{
+			desc:  "Tact Coa Should Return True",
+			input: "Tact Coa",
+			want:  true,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := arraysandstrings.CheckIfPalindromePermutation(tC.input)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}
