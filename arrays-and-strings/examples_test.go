@@ -205,3 +205,50 @@ func TestCheckIfPermutationPalindrome(t *testing.T) {
 		})
 	}
 }
+
+// 1.5 --------------------------------------------------------------------------------------------------------
+
+func TestIsOneAwayEdited(t *testing.T) {
+	testCases := []struct {
+		desc               string
+		inputOne, inputTwo string
+		want               bool
+	}{
+		{
+			desc:     "pale and Pale should return true",
+			inputOne: "pale",
+			inputTwo: "Pale",
+			want:     true,
+		},
+		{
+			desc:     "pale and pales should return true",
+			inputOne: "pale",
+			inputTwo: "pales",
+			want:     true,
+		},
+		{
+			desc:     "pale and pale should return true",
+			inputOne: "pale",
+			inputTwo: "pale",
+			want:     true,
+		},
+		{
+			desc:     "pale and bake should return false",
+			inputOne: "pale",
+			inputTwo: "bake",
+			want:     false,
+		},
+		{
+			desc:     "pale and baked too much should return false",
+			inputOne: "pale",
+			inputTwo: "baked too much",
+			want:     false,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := arraysandstrings.IsOneAwayEdited(tC.inputOne, tC.inputTwo)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}

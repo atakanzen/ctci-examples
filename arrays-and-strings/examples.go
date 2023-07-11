@@ -1,6 +1,9 @@
 package arraysandstrings
 
-import "unicode"
+import (
+	"math"
+	"unicode"
+)
 
 // --------------------------------------------------------------------------------------------------------------
 
@@ -167,6 +170,50 @@ func CheckIfPalindromePermutation(input string) bool {
 				return false
 			}
 			oddFound = true
+		}
+	}
+
+	return true
+}
+
+// --------------------------------------------------------------------------------------------------------------
+
+// 1.5 One Away: There are three types of edits that can be performed on strings:
+// 	- Insert a character
+// 	- Remove a character
+// 	- Replace a character
+
+//    Given two strings, write a function to check if they are one edit (or zero edits) away
+
+// pale, ple -> true
+// pales, pale -> true
+// pale, bale -> true
+// pale, bake -> false
+
+// Zero edit means that the two strings are identical (BASE CASE)
+// Number of characters if the difference is 1 that covers Insert/Remove
+// Replacement -> lengths should be same, and we can loop over the first String compare the characters on iteration index
+
+func IsOneAwayEdited(inputOne, inputTwo string) bool {
+
+	// Zero edit
+	if inputOne == inputTwo {
+		return true
+	}
+
+	// Insert/Remove
+	if math.Abs(float64(len(inputOne)-len(inputTwo))) == 1 {
+		return true
+	}
+
+	// Replacement
+	changeFound := false
+	for i, ru := range inputOne {
+		if rune(inputTwo[i]) != ru {
+			if changeFound {
+				return false
+			}
+			changeFound = true
 		}
 	}
 
