@@ -187,6 +187,16 @@ func TestCheckIfPermutationPalindrome(t *testing.T) {
 			input: "Tact Coa",
 			want:  true,
 		},
+		{
+			desc:  "Qeur rique Should Return True",
+			input: "Quer rique",
+			want:  true,
+		},
+		{
+			desc:  "UTQY YYTQYY Should Return False",
+			input: "UTQY YYTQYY",
+			want:  false,
+		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {

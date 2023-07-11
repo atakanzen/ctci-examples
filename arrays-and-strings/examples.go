@@ -1,5 +1,7 @@
 package arraysandstrings
 
+import "unicode"
+
 // --------------------------------------------------------------------------------------------------------------
 
 // 1.1: Implement an algorithm to determine if a string has all unique characters, what if you cannot use additional data structures?
@@ -153,18 +155,18 @@ func CheckIfPalindromePermutation(input string) bool {
 	letters := make([]int, 128)
 	for _, ru := range input {
 		if string(ru) != " " {
-			letters[ru]++
+			letters[unicode.ToLower(ru)]++
 		}
 	}
 
-	oddCounter := 0
+	oddFound := false
 
 	for _, letterCount := range letters {
-		if letterCount%2 != 0 {
-			oddCounter++
-			if oddCounter > 1 {
+		if letterCount%2 == 1 {
+			if oddFound {
 				return false
 			}
+			oddFound = true
 		}
 	}
 
