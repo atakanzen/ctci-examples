@@ -2,6 +2,8 @@ package arraysandstrings
 
 import (
 	"math"
+	"strconv"
+	"strings"
 	"unicode"
 )
 
@@ -218,4 +220,75 @@ func IsOneAwayEdited(inputOne, inputTwo string) bool {
 	}
 
 	return true
+}
+
+// 1.6 String Compression: Implement a function to perform basic string compression using the counts of repeated characters. E.g. string aabcccccaaa would become a2b1c5a3. If the compressed string would not become smaller than the original string. You can assume the string has only uppercase and lowercase letters (a-z)
+
+// Maybe a string builder usage? Not sure if in interviews these are ok. IT'S OK TO GET BETTER SPACE COMPLEXITY
+// We can also count the final compressed string length and check before creating the actual string to not do unnecessary work. This will bring more code, almost duplicate, however it may be efficient. I'll benchmark these two
+
+// A BIT FASTER IN TIME COMPLEXITY BUT WORSE IN SPACE COMPLEXITY
+func StringCompression(originalString string) string {
+	counter := 0
+	sb := new(strings.Builder)
+
+	for i, ru := range originalString {
+		counter++
+		if i+1 >= len(originalString) || ru != rune(originalString[i+1]) {
+			sb.WriteString(string(ru))
+			sb.WriteString(strconv.Itoa(counter))
+			counter = 0
+		}
+	}
+
+	compressed := sb.String()
+
+	if len(compressed) < len(originalString) {
+		return compressed
+	} else {
+		return originalString
+	}
+}
+
+// FASTER TIME COMPLEXITY IF NO NEED TO COMPRESS, MUCH BETTER SPACE COMPLEXITY
+func StringCompressionPreliminaryCheck(originalString string) string {
+	finalCompressedLength := countCompressionLength(originalString)
+	// Preliminary check and return
+	if finalCompressedLength > len(originalString) {
+		return originalString
+	}
+
+	counter := 0
+	sb := new(strings.Builder)
+	sb.Grow(finalCompressedLength)
+
+	for i, ru := range originalString {
+		counter++
+		if i+1 >= len(originalString) || ru != rune(originalString[i+1]) {
+			sb.WriteString(string(ru))
+			sb.WriteString(strconv.Itoa(counter))
+			counter = 0
+		}
+	}
+
+	compressed := sb.String()
+
+	if len(compressed) < len(originalString) {
+		return compressed
+	} else {
+		return originalString
+	}
+}
+
+func countCompressionLength(input string) int {
+	compressedLength := 0
+	counter := 0
+	for i, ru := range input {
+		counter++
+		if i+1 >= len(input) || ru != rune(input[i+1]) {
+			compressedLength += 1 + len(strconv.Itoa(counter))
+			counter = 0
+		}
+	}
+	return compressedLength
 }

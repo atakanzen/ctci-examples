@@ -252,3 +252,116 @@ func TestIsOneAwayEdited(t *testing.T) {
 		})
 	}
 }
+
+// 1.6 --------------------------------------------------------------------------------------------------------
+
+func TestStringCompression(t *testing.T) {
+	testCases := []struct {
+		desc  string
+		input string
+		want  string
+	}{
+		{
+			desc:  "should return a2B1c5a3",
+			input: "aabcccccaaa",
+			want:  "a2b1c5a3",
+		},
+		{
+			desc:  "should return a2B1c5A3",
+			input: "aaBcccccAAA",
+			want:  "a2B1c5A3",
+		},
+		{
+			desc:  "should return q7w2e5r3T1t2y32",
+			input: "qqqqqqqwweeeeerrrTttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+			want:  "q7w2e5r3T1t2y32",
+		},
+		{
+			desc:  "should return kubernetes",
+			input: "kubernetes",
+			want:  "kubernetes",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := arraysandstrings.StringCompression(tC.input)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}
+
+func BenchmarkStringCompression(b *testing.B) {
+
+	testCases := []struct {
+		desc  string
+		input string
+		want  string
+	}{
+		{
+			desc:  "should return a2B1c5a3",
+			input: "aabcccccaaa",
+			want:  "a2b1c5a3",
+		},
+		{
+			desc:  "should return a2B1c5A3",
+			input: "aaBcccccAAA",
+			want:  "a2B1c5A3",
+		},
+		{
+			desc:  "should return q7w2e5r3T1t2y32",
+			input: "qqqqqqqwweeeeerrrTttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+			want:  "q7w2e5r3T1t2y32",
+		},
+		{
+			desc:  "should return kubernetes",
+			input: "kubernetes",
+			want:  "kubernetes",
+		},
+	}
+
+	for _, tC := range testCases {
+		b.Run(tC.desc, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				arraysandstrings.StringCompression(tC.input)
+			}
+		})
+	}
+}
+
+func BenchmarkStringCompressionWithPreliminaryCheck(b *testing.B) {
+
+	testCases := []struct {
+		desc  string
+		input string
+		want  string
+	}{
+		{
+			desc:  "should return a2B1c5a3",
+			input: "aabcccccaaa",
+			want:  "a2b1c5a3",
+		},
+		{
+			desc:  "should return a2B1c5A3",
+			input: "aaBcccccAAA",
+			want:  "a2B1c5A3",
+		},
+		{
+			desc:  "should return q7w2e5r3T1t2y32",
+			input: "qqqqqqqwweeeeerrrTttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+			want:  "q7w2e5r3T1t2y32",
+		},
+		{
+			desc:  "should return kubernetes",
+			input: "kubernetes",
+			want:  "kubernetes",
+		},
+	}
+
+	for _, tC := range testCases {
+		b.Run(tC.desc, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				arraysandstrings.StringCompressionPreliminaryCheck(tC.input)
+			}
+		})
+	}
+}
