@@ -292,3 +292,44 @@ func countCompressionLength(input string) int {
 	}
 	return compressedLength
 }
+
+// 1.7 Rotate Matrix: Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes (32bits), write a method to rotate the image by 90 degrees, in place?
+
+/*
+[1,   2,  3,  4,  5]    [21, 17, 11, 6, 1]
+[6,   7,  8,  9, 10] => [22, 18, 12, 7, 2]
+[11, 12, 13, 14, 16]	   [23, 19, 13, 8, 3]
+[17, 18, 19, 20, 21]    [24, 20, 14, 9, 4]
+[21, 22, 23, 24, 25]    [25, 21, 16, 10, 5]
+*/
+
+// O(N^2) since we need to touch each item in both of the lists in the matrix
+
+func RotateImageBy90Degrees(matrix [][]int) [][]int {
+	if len(matrix) == 0 || len(matrix) != len(matrix[0]) {
+		return matrix
+	}
+
+	n := len(matrix)
+	// Amount of layers is equal to the half of matrix size
+	for layer := 0; layer < n/2; layer++ {
+		// Boundaries of the layer
+		first := layer
+		last := n - 1 - layer
+		for i := first; i < last; i++ {
+			offset := i - first
+			// Saving top first
+			top := matrix[first][i]
+			// Left -> Top
+			matrix[first][i] = matrix[last-offset][first]
+			// Bottom -> Left
+			matrix[last-offset][first] = matrix[last][last-offset]
+			// Right -> Bottom
+			matrix[last][last-offset] = matrix[i][last]
+			// Top -> Right
+			matrix[i][last] = top
+		}
+	}
+
+	return matrix
+}
