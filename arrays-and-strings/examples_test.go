@@ -431,3 +431,88 @@ func TestRotateImageBy90Degrees(t *testing.T) {
 		})
 	}
 }
+
+// 1.8 --------------------------------------------------------------------------------------------------------
+
+func TestZeroMatrix(t *testing.T) {
+	testCases := []struct {
+		desc        string
+		input, want [][]int
+	}{
+		{
+			desc: "with no zero value",
+			input: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 8, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+			want: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 8, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+		},
+		{
+			desc: "with zero on (1,2)",
+			input: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 0, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+			want: [][]int{
+				{1, 2, 0, 4, 5},
+				{0, 0, 0, 0, 0},
+				{11, 12, 0, 14, 15},
+			},
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := arraysandstrings.ZeroMatrix(tC.input)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}
+
+func BenchmarkZeroMatrix(b *testing.B) {
+
+	testCases := []struct {
+		desc        string
+		input, want [][]int
+	}{
+		{
+			desc: "with no zero value",
+			input: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 8, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+			want: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 8, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+		},
+		{
+			desc: "with zero on (1,2)",
+			input: [][]int{
+				{1, 2, 3, 4, 5},
+				{6, 7, 0, 9, 10},
+				{11, 12, 13, 14, 15},
+			},
+			want: [][]int{
+				{1, 2, 0, 4, 5},
+				{0, 0, 0, 0, 0},
+				{11, 12, 0, 14, 15},
+			},
+		},
+	}
+
+	for _, tC := range testCases {
+		b.Run(tC.desc, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				arraysandstrings.ZeroMatrix(tC.input)
+			}
+		})
+	}
+}

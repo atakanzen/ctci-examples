@@ -333,3 +333,42 @@ func RotateImageBy90Degrees(matrix [][]int) [][]int {
 
 	return matrix
 }
+
+// 1.8 Zero Matrix: Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0
+
+func ZeroMatrix(matrix [][]int) [][]int {
+	if len(matrix) == 0 {
+		return matrix
+	}
+	zeroFound := false
+	rowPos := 0
+	colPos := 0
+
+	// O(M*N)
+	for rowIndex, row := range matrix {
+		if zeroFound {
+			break
+		}
+
+		for colIndex, _ := range row {
+			if matrix[rowIndex][colIndex] == 0 {
+				zeroFound = true
+				rowPos = rowIndex
+				colPos = colIndex
+				break
+			}
+		}
+	}
+
+	if zeroFound {
+		for i := 0; i < len(matrix[rowPos]); i++ {
+			matrix[rowPos][i] = 0
+		}
+
+		for i := 0; i < len(matrix); i++ {
+			matrix[i][colPos] = 0
+		}
+	}
+
+	return matrix
+}
