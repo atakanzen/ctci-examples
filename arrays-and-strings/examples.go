@@ -7,13 +7,7 @@ import (
 	"unicode"
 )
 
-// --------------------------------------------------------------------------------------------------------------
-
 // 1.1: Implement an algorithm to determine if a string has all unique characters, what if you cannot use additional data structures?
-
-// We can use a hashmap to create a frequency analysis, by iterating on each letter and see if it exists in the
-// map, if yes increment the counter, if not assign it to the map. Without additional DS I'd need to go with
-// O(N2) since I need to check each pair one by one.
 
 func HasAllUniqueChars(input string) bool {
 	set := make(map[rune]bool, 0)
@@ -28,22 +22,7 @@ func HasAllUniqueChars(input string) bool {
 	return true
 }
 
-// What I missed from the Book?
-
-/*
-	- Asking whether string is ASCII or Unicode to the interviewer
-		- This effects the storage size of the alphabet, which is 128 possible values in ASCII, and 256 in extended ASCII
-	- I couldn't think about returning directly false if the string length exceeds the possible number of unique chars
-	- Asking about whether we're allowed to modify the string to sort it and linearly checking neighboring chars
-*/
-
-// --------------------------------------------------------------------------------------------------------------
-
 // 1.2 Check Permutation: Given two strings, write a method to decide if one is a permutation of the other
-
-// abac , baac , caab
-// In this case permutations are same length, so we can immediately return false if lengths are not equal
-// We can make use of a hashmap to count the occurrences and then see if they match in terms of number of occurrences and the characters
 
 // Time complexity is O(A + B * N), dropping the constants yields O(N)
 
@@ -83,16 +62,10 @@ func getFrequencyMap(input string) map[rune]int {
 	return frequencyMap
 }
 
-// What I missed from the book?
-
-/*
-	- Not necessarily about the book, but I could have used an integer array to map each rune within a predefined integer list, i.e. alphabet. See code below
-*/
-
-// Improvement
+// Improved
 
 func CheckIfPermutationWithRunes(stringOne, stringTwo string) bool {
-	// Here making ASCII array, depends on the incoming string so derive from interviewer
+	// Here making ASCII array, depends on the incoming string, ask about it
 	letters := make([]int, 128)
 	for _, ru := range stringOne {
 		// We count each rune occurence in stringOne
@@ -114,14 +87,6 @@ func CheckIfPermutationWithRunes(stringOne, stringTwo string) bool {
 // --------------------------------------------------------------------------------------------------------------
 
 // 1.3 URLify: Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end to hold the additional characters, and that you are give the true length of the string. Perform operation in place if possible
-
-// Input: "My John Smith    ", 13
-// Output: "Mr%20John%20Smith"
-
-// Seeing this example, I would ask if it's possible to trim the excessive empty spaces around the input
-// We can then just loop in the string, check if it's white space, then replace it with %20
-
-// Hint One: Easiest to modify strings if going from end to start
 
 func URLify(input string, length int) string {
 	space := 0
@@ -154,8 +119,6 @@ func URLify(input string, length int) string {
 
 // 1.4 Palindrome Permutation: Given a string, write a function to check if it is a permutation of a palindrome. Palindrome doesn't need to be just limited to dictionary words.
 
-// To be a permutation of a palindrome a string can have no more than one character that is odd!
-
 func CheckIfPalindromePermutation(input string) bool {
 	letters := make([]int, 128)
 	for _, ru := range input {
@@ -184,20 +147,9 @@ func CheckIfPalindromePermutation(input string) bool {
 // 	- Insert a character
 // 	- Remove a character
 // 	- Replace a character
-
 //    Given two strings, write a function to check if they are one edit (or zero edits) away
 
-// pale, ple -> true
-// pales, pale -> true
-// pale, bale -> true
-// pale, bake -> false
-
-// Zero edit means that the two strings are identical (BASE CASE)
-// Number of characters if the difference is 1 that covers Insert/Remove
-// Replacement -> lengths should be same, and we can loop over the first String compare the characters on iteration index
-
 func IsOneAwayEdited(inputOne, inputTwo string) bool {
-
 	// Zero edit
 	if inputOne == inputTwo {
 		return true
@@ -223,9 +175,6 @@ func IsOneAwayEdited(inputOne, inputTwo string) bool {
 }
 
 // 1.6 String Compression: Implement a function to perform basic string compression using the counts of repeated characters. E.g. string aabcccccaaa would become a2b1c5a3. If the compressed string would not become smaller than the original string. You can assume the string has only uppercase and lowercase letters (a-z)
-
-// Maybe a string builder usage? Not sure if in interviews these are ok. IT'S OK TO GET BETTER SPACE COMPLEXITY
-// We can also count the final compressed string length and check before creating the actual string to not do unnecessary work. This will bring more code, almost duplicate, however it may be efficient. I'll benchmark these two
 
 // A BIT FASTER IN TIME COMPLEXITY BUT WORSE IN SPACE COMPLEXITY
 func StringCompression(originalString string) string {
@@ -295,16 +244,6 @@ func countCompressionLength(input string) int {
 
 // 1.7 Rotate Matrix: Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes (32bits), write a method to rotate the image by 90 degrees, in place?
 
-/*
-[1,   2,  3,  4,  5]    [21, 17, 11, 6, 1]
-[6,   7,  8,  9, 10] => [22, 18, 12, 7, 2]
-[11, 12, 13, 14, 16]	   [23, 19, 13, 8, 3]
-[17, 18, 19, 20, 21]    [24, 20, 14, 9, 4]
-[21, 22, 23, 24, 25]    [25, 21, 16, 10, 5]
-*/
-
-// O(N^2) since we need to touch each item in both of the lists in the matrix
-
 func RotateImageBy90Degrees(matrix [][]int) [][]int {
 	if len(matrix) == 0 || len(matrix) != len(matrix[0]) {
 		return matrix
@@ -371,4 +310,15 @@ func ZeroMatrix(matrix [][]int) [][]int {
 	}
 
 	return matrix
+}
+
+// 1.9 String Rotation: Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring
+
+func IsStringRotation(s1, s2 string) bool {
+	if len(s1) == len(s2) && len(s1) != 0 {
+		s1s1 := s1 + s1
+		return strings.Contains(s1s1, s2)
+	}
+
+	return false
 }

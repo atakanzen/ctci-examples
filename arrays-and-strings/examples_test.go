@@ -516,3 +516,44 @@ func BenchmarkZeroMatrix(b *testing.B) {
 		})
 	}
 }
+
+// 1.9 --------------------------------------------------------------------------------------------------------
+
+func TestIsStringRotation(t *testing.T) {
+	testCases := []struct {
+		desc   string
+		s1, s2 string
+		want   bool
+	}{
+		{
+			desc: "waterbottle and erbottlewat",
+			s1:   "erbottlewat",
+			s2:   "waterbottle",
+			want: true,
+		},
+		{
+			desc: "atakanzengin and nginatakanze",
+			s1:   "nginatakanze",
+			s2:   "atakanzengin",
+			want: true,
+		},
+		{
+			desc: "apple and peach",
+			s1:   "peach",
+			s2:   "apple",
+			want: false,
+		},
+		{
+			desc: "apple and google",
+			s1:   "google",
+			s2:   "apple",
+			want: false,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := arraysandstrings.IsStringRotation(tC.s1, tC.s2)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}
