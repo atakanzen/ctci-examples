@@ -1,5 +1,5 @@
-github.com/atakanzen/go-dsa v0.0.0-20230717134714-5903a3d2f144 h1:55Os0rS+g6Na2EtqXB99yWBUUI6tj3QuEnWKM/MWXZE=
-github.com/atakanzen/go-dsa v0.0.0-20230717134714-5903a3d2f144/go.mod h1:vrkVu2aKYgwzC+TF/VG04ZvODa3lGw5Nx2E/4bx9Y5E=
+github.com/atakanzen/go-dsa v0.1.0 h1:L4ASHTIsX7kWKDpiKs9AFlmWcOfghYDPxep5PapfufM=
+github.com/atakanzen/go-dsa v0.1.0/go.mod h1:vrkVu2aKYgwzC+TF/VG04ZvODa3lGw5Nx2E/4bx9Y5E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
