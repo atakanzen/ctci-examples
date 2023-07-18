@@ -1,11 +1,10 @@
 package linkedlists
 
-import (
-	ll "github.com/atakanzen/go-dsa/linkedlist"
-)
+import "github.com/atakanzen/go-dsa/linkedlist"
+
+// 2.1 Write code to remove duplicates from an unsorted linked list. Follow up, how about without an intermediary buffer
 
 func RemoveDups() {
-	ll := ll.NewDoublyLinkedList()
-
-	ll.Add(10)
+	dl := linkedlist.NewDoublyLinkedList(10)
+	dl.Remove(10)
 }

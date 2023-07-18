@@ -3,7 +3,7 @@ module github.com/atakanzen/ctci-examples
 go 1.19
 
 require (
-	github.com/atakanzen/go-dsa v0.1.0
+	github.com/atakanzen/go-dsa v0.1.2
 	github.com/stretchr/testify v1.8.4
 )
 
