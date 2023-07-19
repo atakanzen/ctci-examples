@@ -205,3 +205,55 @@ func TestKthToLastElementRunner(t *testing.T) {
 		})
 	}
 }
+
+// 2.3 --------------------------------------------------------------------------------------------------------------
+
+func TestDeleteMiddleNode(t *testing.T) {
+	testCases := []struct {
+		desc        string
+		ll          linkedlist.DoublyLinkedList
+		valueToFind interface{}
+		valuesAfter []interface{}
+		want        bool
+	}{
+		{
+			desc:        "should delete B",
+			ll:          *linkedlist.NewDoublyLinkedList("A", "B", "C", "D", "E"),
+			valueToFind: "A",
+			valuesAfter: []interface{}{"A", "C", "D", "E"},
+			want:        true,
+		},
+		{
+			desc:        "should delete C",
+			ll:          *linkedlist.NewDoublyLinkedList("A", "B", "C", "D", "E"),
+			valueToFind: "B",
+			valuesAfter: []interface{}{"A", "B", "D", "E"},
+			want:        true,
+		},
+		{
+			desc:        "should not delete with last item",
+			ll:          *linkedlist.NewDoublyLinkedList("A", "B", "C", "D", "E"),
+			valueToFind: "E",
+			valuesAfter: []interface{}{"A", "B", "C", "D", "E"},
+			want:        false,
+		},
+		{
+			desc:        "should not delete with not existing item",
+			ll:          *linkedlist.NewDoublyLinkedList("A", "B", "C", "D", "E"),
+			valueToFind: 15,
+			valuesAfter: []interface{}{"A", "B", "C", "D", "E"},
+			want:        false,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			node := tC.ll.Get(tC.valueToFind)
+
+			actual := linkedlists.DeleteMiddleNode(node)
+			actualValuesAfter := tC.ll.Values()
+
+			assert.Equal(t, tC.want, actual)
+			assert.Equal(t, tC.valuesAfter, actualValuesAfter)
+		})
+	}
+}

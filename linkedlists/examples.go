@@ -115,3 +115,14 @@ func KthToLastElementRunner(head *ll.Node, k int) interface{} {
 
 	return p2.Value
 }
+
+// 2.3 Delete Middle Node: Implement an algorithm to delete a node in the middle (any value other than the first and last node) of a singly linked list given only access to that node
+
+func DeleteMiddleNode(node *ll.Node) bool {
+	if node == nil || node.Next == nil {
+		return false // Tail Node
+	}
+
+	node.Next = node.Next.Next
+	return true
+}
