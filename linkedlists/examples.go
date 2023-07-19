@@ -75,3 +75,18 @@ func countLinkedList(head *ll.Node) int {
 
 	return count
 }
+
+func KthToLastElementRecursive(head *ll.Node, k int, i *int) interface{} {
+	if head == nil {
+		return nil
+	}
+
+	val := KthToLastElementRecursive(head.Next, k, i)
+	*i += 1
+
+	if *i == k {
+		return head.Value
+	}
+
+	return val
+}

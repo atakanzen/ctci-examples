@@ -112,3 +112,50 @@ func TestKthToLastElement(t *testing.T) {
 		})
 	}
 }
+
+func TestKthToLastElementRecursive(t *testing.T) {
+	testCases := []struct {
+		desc       string
+		linkedList *linkedlist.DoublyLinkedList
+		k          int
+		want       interface{}
+	}{
+		{
+			desc:       "should return 2nd to last element",
+			linkedList: linkedlist.NewDoublyLinkedList(15, 25, 23, 11, 14),
+			k:          2,
+			want:       11,
+		},
+		{
+			desc:       "should return 4th to last element",
+			linkedList: linkedlist.NewDoublyLinkedList(15, 25, 23, 11, 14),
+			k:          4,
+			want:       25,
+		},
+		{
+			desc:       "should return 1st to last element",
+			linkedList: linkedlist.NewDoublyLinkedList(15, 25, 23, 11, 14),
+			k:          1,
+			want:       14,
+		},
+		{
+			desc:       "should return nil for k out of bounds",
+			linkedList: linkedlist.NewDoublyLinkedList(15, 25, 23, 11, 14),
+			k:          6,
+			want:       nil,
+		},
+		{
+			desc:       "should return nil for k negative",
+			linkedList: linkedlist.NewDoublyLinkedList(15, 25, 23, 11, 14),
+			k:          -1,
+			want:       nil,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			i := 0
+			actual := linkedlists.KthToLastElementRecursive(tC.linkedList.Head, tC.k, &i)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}
