@@ -24,3 +24,54 @@ func RemoveDups(linkedList *ll.DoublyLinkedList) []interface{} {
 
 	return linkedList.Values()
 }
+
+func RemoveDupsWithoutBuffer(linkedList *ll.DoublyLinkedList) []interface{} {
+
+	n := linkedList.Head
+	for i := 0; i < linkedList.Length; i++ {
+		m := n.Next
+		for j := i + 1; j < linkedList.Length; j++ {
+			// Check
+			if n.Value == m.Value {
+				linkedList.RemoveAt(j)
+			}
+			m = m.Next
+		}
+		n = n.Next
+	}
+
+	return linkedList.Values()
+}
+
+// 2.2 Implement an algorithm to find kth to last element of a singly linked list
+
+func KthToLastElement(head *ll.Node, k int) interface{} {
+	length := countLinkedList(head) // O(N)
+
+	if k > length-1 || k <= 0 {
+		return nil
+	}
+
+	kTh := length - k
+
+	n := head
+	for i := 0; n != nil; i++ {
+		if i == kTh {
+			return n.Value
+		}
+		n = n.Next
+	}
+
+	return nil
+}
+
+func countLinkedList(head *ll.Node) int {
+	n := head
+	count := 0
+	for n != nil {
+		count++
+		n = n.Next
+	}
+
+	return count
+}
