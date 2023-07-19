@@ -90,3 +90,28 @@ func KthToLastElementRecursive(head *ll.Node, k int, i *int) interface{} {
 
 	return val
 }
+
+func KthToLastElementRunner(head *ll.Node, k int) interface{} {
+	if k < 0 {
+		return nil
+	}
+
+	p1 := head
+	p2 := head
+
+	// Moving p1 k items forward
+	for i := 0; i < k; i++ {
+		if p1 == nil { // out of bounds
+			return nil
+		}
+
+		p1 = p1.Next
+	}
+
+	for p1 != nil {
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+
+	return p2.Value
+}
