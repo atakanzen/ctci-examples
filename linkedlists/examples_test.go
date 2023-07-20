@@ -1,6 +1,7 @@
 package linkedlists_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/atakanzen/ctci-examples/linkedlists"
@@ -256,4 +257,11 @@ func TestDeleteMiddleNode(t *testing.T) {
 			assert.Equal(t, tC.valuesAfter, actualValuesAfter)
 		})
 	}
+}
+
+func TestPartition(t *testing.T) {
+	ll := linkedlist.NewDoublyLinkedList(3, 5, 8, 5, 10, 2, 1)
+	actual := linkedlists.Partition(ll.Head, 5)
+	fmt.Printf("ACTUAL: %+v\n", actual)
+	fmt.Printf("VALUES:%s\n", ll.Values()...)
 }

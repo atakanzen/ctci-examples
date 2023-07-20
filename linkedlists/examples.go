@@ -1,6 +1,8 @@
 package linkedlists
 
 import (
+	"fmt"
+
 	ll "github.com/atakanzen/go-dsa/linkedlist"
 )
 
@@ -125,4 +127,26 @@ func DeleteMiddleNode(node *ll.Node) bool {
 
 	node.Next = node.Next.Next
 	return true
+}
+
+// 2.4
+// TODO
+func Partition(node *ll.Node, pivot interface{}) *ll.Node {
+	head := node
+	tail := node
+
+	for node != nil {
+		fmt.Println(node.Value)
+		next := node.Next
+		if node.Value.(int) < pivot.(int) {
+			head.Next = head
+			head = node
+		} else {
+			tail.Next = node
+			tail = node
+		}
+		node = next
+	}
+
+	return head
 }
