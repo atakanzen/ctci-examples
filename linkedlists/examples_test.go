@@ -1,7 +1,6 @@
 package linkedlists_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/atakanzen/ctci-examples/linkedlists"
@@ -260,8 +259,30 @@ func TestDeleteMiddleNode(t *testing.T) {
 }
 
 func TestPartition(t *testing.T) {
-	ll := linkedlist.NewDoublyLinkedList(3, 5, 8, 5, 10, 2, 1)
-	actual := linkedlists.Partition(ll.Head, 5)
-	fmt.Printf("ACTUAL: %+v\n", actual)
-	fmt.Printf("VALUES:%s\n", ll.Values()...)
+	testCases := []struct {
+		desc  string
+		ll    *linkedlist.DoublyLinkedList
+		pivot interface{}
+		want  []interface{}
+	}{
+		{
+			desc:  "should partition around 5",
+			ll:    linkedlist.NewDoublyLinkedList(3, 5, 8, 5, 10, 2, 1),
+			pivot: 5,
+			want:  []interface{}{3, 2, 1, 5, 8, 5, 10},
+		},
+		{
+			desc:  "should partition around 10",
+			ll:    linkedlist.NewDoublyLinkedList(3, 25, 8, 10, 10, 13, 1),
+			pivot: 10,
+			want:  []interface{}{3, 8, 1, 25, 10, 10, 13},
+		},
+	}
+
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			linkedlists.Partition(tC.ll, tC.pivot)
+			assert.Equal(t, tC.want, tC.ll.Values())
+		})
+	}
 }
