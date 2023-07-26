@@ -128,7 +128,6 @@ func DeleteMiddleNode(node *ll.Node) bool {
 }
 
 // 2.4
-// TODO
 func Partition(list *ll.DoublyLinkedList, pivot interface{}) {
 	lower := ll.NewDoublyLinkedList()
 	higher := ll.NewDoublyLinkedList()
@@ -148,4 +147,30 @@ func Partition(list *ll.DoublyLinkedList, pivot interface{}) {
 	lower.Tail.Next, higher.Head.Prev = higher.Head, lower.Tail
 	list.Head = lower.Head
 	list.Tail = higher.Tail
+}
+
+// 2.5
+func SumByLinkedList(numberOne, numberTwo *ll.DoublyLinkedList) *ll.DoublyLinkedList {
+	carry := 0
+	digitOne := numberOne.Head
+	digitTwo := numberTwo.Head
+	sum := ll.NewDoublyLinkedList()
+
+	for digitOne != nil {
+		placeSum := digitOne.Value.(int) + digitTwo.Value.(int) + carry
+		carry = placeSum / 10
+
+		if digitOne.Next == nil && placeSum >= 10 {
+			sum.Add(placeSum % 10)
+			sum.Add(placeSum / 10)
+		} else {
+			placeSum = placeSum % 10
+			sum.Add(placeSum)
+		}
+
+		digitOne = digitOne.Next
+		digitTwo = digitTwo.Next
+	}
+
+	return sum
 }

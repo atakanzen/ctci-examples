@@ -258,6 +258,8 @@ func TestDeleteMiddleNode(t *testing.T) {
 	}
 }
 
+// 2.4 --------------------------------------------------------------------------------------------------------------
+
 func TestPartition(t *testing.T) {
 	testCases := []struct {
 		desc  string
@@ -283,6 +285,47 @@ func TestPartition(t *testing.T) {
 		t.Run(tC.desc, func(t *testing.T) {
 			linkedlists.Partition(tC.ll, tC.pivot)
 			assert.Equal(t, tC.want, tC.ll.Values())
+		})
+	}
+}
+
+// 2.5 --------------------------------------------------------------------------------------------------------------
+
+func TestSumByLinkedList(t *testing.T) {
+	testCases := []struct {
+		desc                 string
+		numberOne, numberTwo *linkedlist.DoublyLinkedList
+		want                 *linkedlist.DoublyLinkedList
+	}{
+		{
+			desc:      "should return 219",
+			numberOne: linkedlist.NewDoublyLinkedList(7, 1, 6),
+			numberTwo: linkedlist.NewDoublyLinkedList(5, 9, 2),
+			want:      linkedlist.NewDoublyLinkedList(2, 1, 9),
+		},
+		{
+			desc:      "should return 5911",
+			numberOne: linkedlist.NewDoublyLinkedList(2, 7, 6),
+			numberTwo: linkedlist.NewDoublyLinkedList(3, 2, 5),
+			want:      linkedlist.NewDoublyLinkedList(5, 9, 1, 1),
+		},
+		{
+			desc:      "should return 9591",
+			numberOne: linkedlist.NewDoublyLinkedList(5, 7, 9),
+			numberTwo: linkedlist.NewDoublyLinkedList(4, 8, 9),
+			want:      linkedlist.NewDoublyLinkedList(9, 5, 9, 1),
+		},
+		{
+			desc:      "should return 0004",
+			numberOne: linkedlist.NewDoublyLinkedList(0, 0, 0, 2),
+			numberTwo: linkedlist.NewDoublyLinkedList(0, 0, 0, 2),
+			want:      linkedlist.NewDoublyLinkedList(0, 0, 0, 4),
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := linkedlists.SumByLinkedList(tC.numberOne, tC.numberTwo)
+			assert.Equal(t, tC.want.Values(), actual.Values())
 		})
 	}
 }
